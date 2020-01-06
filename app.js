@@ -3,6 +3,11 @@ new Vue({
     data: {
         currencies: {}
     },
+    computed: {
+        formattedCurrencies(){
+            return Object.values(this.currencies);
+        }
+    },
     methods: {
         getCurrencies(){
             const currencies = localStorage.getItem('currencies')
@@ -11,7 +16,7 @@ new Vue({
                 this.currencies = JSON.parse(currencies);
                 return;
             }
-            
+
             axios.get('https://free.currconv.com/api/v7/currencies?apiKey=3203da39401131f777d9')
             .then(response => {
                 this.currencies = response.data.results;
