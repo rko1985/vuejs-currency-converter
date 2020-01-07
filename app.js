@@ -5,7 +5,8 @@ new Vue({
         amount: 0,
         from: 'EUR',
         to: 'USD',
-        result: 0
+        result: 0,
+        loading: false
     },
     computed: {
         formattedCurrencies(){
@@ -15,12 +16,12 @@ new Vue({
             return (Number(this.amount) * this.result).toFixed(2);
         },
         disabled(){
-            return this.amount === 0 || !this.amount;
+            return this.amount === 0 || !this.amount || this.loading;
         }
     },
     methods: {
         getCurrencies(){
-            const currencies = localStorage.getItem('currencies')
+            const currencies = localStorage.getItem('currencies');
 
             if(currencies){
                 this.currencies = JSON.parse(currencies);
@@ -36,8 +37,11 @@ new Vue({
         convertCurrency(){
             const key = `${this.from}_${this.to}`;
 
+            this.loading = true;
+
             axios.get(`https://free.currconv.com/api/v7/convert?q=${key}&compact=ultra&apiKey=3203da39401131f777d9`)
                 .then((response) => {
+                    this.loading = false;
                     console.log(response.data[key]);
                     this.result = response.data[key];
                 })
