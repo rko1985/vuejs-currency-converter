@@ -47,6 +47,14 @@ new Vue({
                 })
         }
     },
+    watch: {
+        from(){
+            this.result = 0;
+        },
+        to(){
+            this.result = 0;
+        }
+    },
     mounted(){
         this.getCurrencies();
     }
