@@ -13,6 +13,9 @@ new Vue({
         },
         calculateResult(){
             return (Number(this.amount) * this.result).toFixed(2);
+        },
+        disabled(){
+            return this.amount === 0 || !this.amount;
         }
     },
     methods: {
